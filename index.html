@@ -136,5 +136,58 @@
     </div>
 </div>
 <script src="calculator.js"></script>
+<section style="max-width: 800px; margin: auto; padding: 20px;">
+  <h2>How to Use This Calculator</h2>
+  <p>This NIST 800-53 Security Control Calculator is designed to help assess the implementation of cybersecurity controls across virtual desktop platforms, in accordance with <strong>NIST SP 800-53 Revision 5</strong>.</p>
+
+  <h3>🔧 Step-by-Step Instructions</h3>
+  <ol>
+    <li><strong>Set System Characteristics:</strong>
+      <ul>
+        <li>Select <strong>Confidentiality, Integrity, and Availability</strong> levels based on your system classification (Low, Moderate, or High).</li>
+        <li>For most business and healthcare use cases, <strong>MODERATE</strong> is appropriate.</li>
+      </ul>
+    </li>
+
+    <li><strong>Add Control Assessments:</strong>
+      <ul>
+        <li>Select the <strong>Control Family</strong> (e.g., Access Control).</li>
+        <li>Enter a valid <strong>Control ID</strong> (e.g., AC-2, IA-5, AU-6).</li>
+        <li>Specify how the control is implemented:
+          <ul>
+            <li><strong>Protect:</strong> Does this control prevent threats?</li>
+            <li><strong>Detect:</strong> Does it monitor or alert?</li>
+            <li><strong>Respond:</strong> Can it take corrective action?</li>
+          </ul>
+        </li>
+        <li>Choose <strong>Implementation Status</strong> (Implemented, Partially Implemented, etc.).</li>
+        <li>Provide an <strong>Implementation Percentage</strong> (e.g., 1.0 for full, 0.5 for partial).</li>
+        <li>Click <strong>Add Control</strong>.</li>
+      </ul>
+    </li>
+
+    <li><strong>Repeat:</strong> Add more controls to cover all required families (AC, AU, IA, SC, SI, etc.).</li>
+
+    <li><strong>Review Score:</strong> Your <strong>Overall Score</strong> will update as you assess more controls.</li>
+  </ol>
+
+  <h3>📊 Use Case Example: VDI Security Comparison</h3>
+  <p>You can use this tool to compare virtual desktop infrastructure (VDI) platforms like:</p>
+  <ul>
+    <li>Azure Virtual Desktop</li>
+    <li>VMware Horizon</li>
+    <li>Microsoft Remote Desktop Services (RDS)</li>
+  </ul>
+  <p>For each platform, assess how well it implements each control and compare scores to select the most secure option.</p>
+
+  <h3>📁 Resources</h3>
+  <ul>
+    <li><a href="https://csrc.nist.gov/publications/detail/sp/800-53/rev-5/final" target="_blank">NIST SP 800-53 Rev. 5 Controls</a></li>
+    <li><a href="https://nvd.nist.gov/800-53" target="_blank">NIST 800-53 Control Catalog (Searchable)</a></li>
+  </ul>
+
+  <p style="margin-top: 30px; font-style: italic;">This calculator is ideal for internal security teams, risk analysts, and IT managers to perform qualitative and quantitative cybersecurity assessments based on NIST 800-53 guidance.</p>
+</section>
+
 </body>
 </html>
