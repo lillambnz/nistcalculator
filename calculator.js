@@ -2,20 +2,25 @@ class NISTCalculator {
     constructor() {
         this.controlFamilies = {
             'AC': { name: 'Access Control', weight: 0.12 },
+            'AT': { name: 'Awareness and Training', weight: 0.02 },
             'AU': { name: 'Audit and Accountability', weight: 0.08 },
+            'CA': { name: 'Assessment, Authorization, and Monitoring', weight: 0.04 },
             'CM': { name: 'Configuration Management', weight: 0.07 },
             'CP': { name: 'Contingency Planning', weight: 0.05 },
             'IA': { name: 'Identification and Authentication', weight: 0.11 },
             'IR': { name: 'Incident Response', weight: 0.08 },
             'MA': { name: 'Maintenance', weight: 0.03 },
             'MP': { name: 'Media Protection', weight: 0.02 },
-            'PE': { name: 'Physical & Environmental Protection', weight: 0.03 },
+            'PE': { name: 'Physical and Environmental Protection', weight: 0.03 },
             'PL': { name: 'Planning', weight: 0.02 },
             'PM': { name: 'Program Management', weight: 0.03 },
             'PS': { name: 'Personnel Security', weight: 0.02 },
+            'PT': { name: 'Privacy Controls', weight: 0.02 },
             'RA': { name: 'Risk Assessment', weight: 0.06 },
-            'SC': { name: 'System & Communications Protection', weight: 0.15 },
-            'SI': { name: 'System & Information Integrity', weight: 0.11 }
+            'SA': { name: 'System and Services Acquisition', weight: 0.04 },
+            'SC': { name: 'System and Communications Protection', weight: 0.15 },
+            'SI': { name: 'System and Information Integrity', weight: 0.11 },
+            'SR': { name: 'Supply Chain Risk Management', weight: 0.04 }
         };
         this.assessments = {};
     }
