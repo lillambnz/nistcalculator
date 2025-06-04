@@ -2,89 +2,139 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>NIST 800-53 Security Calculator</title>
-    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <title>NIST 800-53 Security Control Calculator</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style>
+        body { font-family: Arial, sans-serif; background: #f3f4f6; margin: 0; padding: 0; }
+        .container { max-width: 800px; margin: 40px auto; background: #fff; border-radius: 8px; box-shadow: 0 2px 8px #0001; padding: 24px; }
+        h1 { text-align: center; }
+        label { font-weight: bold; }
+        select, input[type="text"], input[type="number"] {
+            width: 100%; padding: 8px; margin-bottom: 12px; border-radius: 4px; border: 1px solid #ccc;
+        }
+        .row { display: flex; gap: 16px; }
+        .row > div { flex: 1; }
+        .button { background: #2563eb; color: #fff; border: none; border-radius: 4px; padding: 10px 20px; cursor: pointer; }
+        .button:hover { background: #1d4ed8; }
+        .result { background: #f1f5f9; padding: 12px; border-radius: 4px; margin-bottom: 12px; }
+        .score { font-size: 1.4em; font-weight: bold; }
+        .family { margin-bottom: 8px; }
+        .control { background: #f9fafb; margin-bottom: 6px; padding: 8px; border-radius: 4px; }
+    </style>
 </head>
-<body class="bg-gray-100 min-h-screen py-8">
-    <div class="container mx-auto px-4">
-        <h1 class="text-3xl font-bold text-center mb-8">NIST 800-53 Security Control Calculator</h1>
-        
-        <div class="bg-white rounded-lg shadow-lg p-6 mb-6">
-            <h2 class="text-xl font-semibold mb-4">System Characteristics</h2>
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
-                <select id="confidentiality" class="border rounded p-2">
-                    <option value="LOW">Confidentiality: LOW</option>
-                    <option value="MODERATE" selected>Confidentiality: MODERATE</option>
-                    <option value="HIGH">Confidentiality: HIGH</option>
+<body>
+<div class="container">
+    <h1>NIST 800-53 Security Control Calculator</h1>
+    <div>
+        <h3>System Characteristics</h3>
+        <div class="row">
+            <div>
+                <label>Confidentiality:</label>
+                <select id="confidentiality">
+                    <option value="LOW">LOW</option>
+                    <option value="MODERATE" selected>MODERATE</option>
+                    <option value="HIGH">HIGH</option>
                 </select>
-                <select id="integrity" class="border rounded p-2">
-                    <option value="LOW">Integrity: LOW</option>
-                    <option value="MODERATE" selected>Integrity: MODERATE</option>
-                    <option value="HIGH">Integrity: HIGH</option>
+            </div>
+            <div>
+                <label>Integrity:</label>
+                <select id="integrity">
+                    <option value="LOW">LOW</option>
+                    <option value="MODERATE" selected>MODERATE</option>
+                    <option value="HIGH">HIGH</option>
                 </select>
-                <select id="availability" class="border rounded p-2">
-                    <option value="LOW">Availability: LOW</option>
-                    <option value="MODERATE" selected>Availability: MODERATE</option>
-                    <option value="HIGH">Availability: HIGH</option>
+            </div>
+            <div>
+                <label>Availability:</label>
+                <select id="availability">
+                    <option value="LOW">LOW</option>
+                    <option value="MODERATE" selected>MODERATE</option>
+                    <option value="HIGH">HIGH</option>
                 </select>
             </div>
         </div>
-
-        <div class="bg-white rounded-lg shadow-lg p-6 mb-6">
-            <h2 class="text-xl font-semibold mb-4">Add Control Assessment</h2>
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-                <select id="controlFamily" class="border rounded p-2">
+    </div>
+    <hr>
+    <div>
+        <h3>Add Control Assessment</h3>
+        <div class="row">
+            <div>
+                <label>Family:</label>
+                <select id="controlFamily">
                     <option value="AC">Access Control (AC)</option>
                     <option value="AU">Audit & Accountability (AU)</option>
-                    <option value="SC">System & Communications Protection (SC)</option>
+                    <option value="CM">Configuration Management (CM)</option>
+                    <option value="CP">Contingency Planning (CP)</option>
                     <option value="IA">Identification & Authentication (IA)</option>
+                    <option value="IR">Incident Response (IR)</option>
+                    <option value="MA">Maintenance (MA)</option>
+                    <option value="MP">Media Protection (MP)</option>
+                    <option value="PE">Physical & Environmental Protection (PE)</option>
+                    <option value="PL">Planning (PL)</option>
+                    <option value="PM">Program Management (PM)</option>
+                    <option value="PS">Personnel Security (PS)</option>
+                    <option value="RA">Risk Assessment (RA)</option>
+                    <option value="SC">System & Communications Protection (SC)</option>
                     <option value="SI">System & Information Integrity (SI)</option>
                 </select>
-                <input type="text" id="controlId" placeholder="Control ID (e.g., AC-2)" class="border rounded p-2">
-                <select id="protectScore" class="border rounded p-2">
-                    <option value="0">Protect: Not Applicable</option>
-                    <option value="1">Protect: Limited</option>
-                    <option value="2">Protect: Moderate</option>
-                    <option value="3">Protect: Significant</option>
-                </select>
-                <select id="detectScore" class="border rounded p-2">
-                    <option value="0">Detect: Not Applicable</option>
-                    <option value="1">Detect: Limited</option>
-                    <option value="2">Detect: Moderate</option>
-                    <option value="3">Detect: Significant</option>
+            </div>
+            <div>
+                <label>Control ID:</label>
+                <input type="text" id="controlId" placeholder="e.g., AC-2">
+            </div>
+        </div>
+        <div class="row">
+            <div>
+                <label>Protect:</label>
+                <select id="protectScore">
+                    <option value="0">Not Applicable</option>
+                    <option value="1">Limited</option>
+                    <option value="2">Moderate</option>
+                    <option value="3">Significant</option>
                 </select>
             </div>
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mt-4">
-                <select id="respondScore" class="border rounded p-2">
-                    <option value="0">Respond: Not Applicable</option>
-                    <option value="1">Respond: Limited</option>
-                    <option value="2">Respond: Moderate</option>
-                    <option value="3">Respond: Significant</option>
+            <div>
+                <label>Detect:</label>
+                <select id="detectScore">
+                    <option value="0">Not Applicable</option>
+                    <option value="1">Limited</option>
+                    <option value="2">Moderate</option>
+                    <option value="3">Significant</option>
                 </select>
-                <select id="implementationStatus" class="border rounded p-2">
+            </div>
+            <div>
+                <label>Respond:</label>
+                <select id="respondScore">
+                    <option value="0">Not Applicable</option>
+                    <option value="1">Limited</option>
+                    <option value="2">Moderate</option>
+                    <option value="3">Significant</option>
+                </select>
+            </div>
+            <div>
+                <label>Implementation Status:</label>
+                <select id="implementationStatus">
                     <option value="0">Not Implemented</option>
                     <option value="1">Partially Implemented</option>
                     <option value="2">Largely Implemented</option>
                     <option value="3">Fully Implemented</option>
                 </select>
-                <input type="number" id="implementationPercentage" placeholder="Implementation %" min="0" max="100" class="border rounded p-2">
             </div>
-            <button onclick="addControl()" class="bg-blue-500 text-white px-4 py-2 rounded mt-4 hover:bg-blue-600">Add Control</button>
+            <div>
+                <label>Implementation %:</label>
+                <input type="number" id="implementationPercentage" min="0" max="100" placeholder="e.g., 80">
+            </div>
         </div>
-
-        <div class="bg-white rounded-lg shadow-lg p-6 mb-6">
-            <h2 class="text-xl font-semibold mb-4">Assessment Results</h2>
-            <div id="overallScore" class="text-2xl font-bold text-center mb-4">Overall Score: 0.0/5.0</div>
-            <div id="familyScores"></div>
-        </div>
-
-        <div class="bg-white rounded-lg shadow-lg p-6">
-            <h2 class="text-xl font-semibold mb-4">Control Assessments</h2>
-            <div id="controlList"></div>
-        </div>
+        <button class="button" onclick="addControl()">Add Control</button>
     </div>
-
-    <script src="calculator.js"></script>
+    <hr>
+    <div>
+        <h3>Assessment Results</h3>
+        <div id="overallScore" class="score"></div>
+        <div id="familyScores"></div>
+        <div id="controlList"></div>
+    </div>
+</div>
+<script src="calculator.js"></script>
 </body>
 </html>
