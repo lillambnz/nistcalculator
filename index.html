@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NIST 800-53 Security Calculator</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+</head>
+<body class="bg-gray-100 min-h-screen py-8">
+    <div class="container mx-auto px-4">
+        <h1 class="text-3xl font-bold text-center mb-8">NIST 800-53 Security Control Calculator</h1>
+        
+        <div class="bg-white rounded-lg shadow-lg p-6 mb-6">
+            <h2 class="text-xl font-semibold mb-4">System Characteristics</h2>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                <select id="confidentiality" class="border rounded p-2">
+                    <option value="LOW">Confidentiality: LOW</option>
+                    <option value="MODERATE" selected>Confidentiality: MODERATE</option>
+                    <option value="HIGH">Confidentiality: HIGH</option>
+                </select>
+                <select id="integrity" class="border rounded p-2">
+                    <option value="LOW">Integrity: LOW</option>
+                    <option value="MODERATE" selected>Integrity: MODERATE</option>
+                    <option value="HIGH">Integrity: HIGH</option>
+                </select>
+                <select id="availability" class="border rounded p-2">
+                    <option value="LOW">Availability: LOW</option>
+                    <option value="MODERATE" selected>Availability: MODERATE</option>
+                    <option value="HIGH">Availability: HIGH</option>
+                </select>
+            </div>
+        </div>
+
+        <div class="bg-white rounded-lg shadow-lg p-6 mb-6">
+            <h2 class="text-xl font-semibold mb-4">Add Control Assessment</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+                <select id="controlFamily" class="border rounded p-2">
+                    <option value="AC">Access Control (AC)</option>
+                    <option value="AU">Audit & Accountability (AU)</option>
+                    <option value="SC">System & Communications Protection (SC)</option>
+                    <option value="IA">Identification & Authentication (IA)</option>
+                    <option value="SI">System & Information Integrity (SI)</option>
+                </select>
+                <input type="text" id="controlId" placeholder="Control ID (e.g., AC-2)" class="border rounded p-2">
+                <select id="protectScore" class="border rounded p-2">
+                    <option value="0">Protect: Not Applicable</option>
+                    <option value="1">Protect: Limited</option>
+                    <option value="2">Protect: Moderate</option>
+                    <option value="3">Protect: Significant</option>
+                </select>
+                <select id="detectScore" class="border rounded p-2">
+                    <option value="0">Detect: Not Applicable</option>
+                    <option value="1">Detect: Limited</option>
+                    <option value="2">Detect: Moderate</option>
+                    <option value="3">Detect: Significant</option>
+                </select>
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mt-4">
+                <select id="respondScore" class="border rounded p-2">
+                    <option value="0">Respond: Not Applicable</option>
+                    <option value="1">Respond: Limited</option>
+                    <option value="2">Respond: Moderate</option>
+                    <option value="3">Respond: Significant</option>
+                </select>
+                <select id="implementationStatus" class="border rounded p-2">
+                    <option value="0">Not Implemented</option>
+                    <option value="1">Partially Implemented</option>
+                    <option value="2">Largely Implemented</option>
+                    <option value="3">Fully Implemented</option>
+                </select>
+                <input type="number" id="implementationPercentage" placeholder="Implementation %" min="0" max="100" class="border rounded p-2">
+            </div>
+            <button onclick="addControl()" class="bg-blue-500 text-white px-4 py-2 rounded mt-4 hover:bg-blue-600">Add Control</button>
+        </div>
+
+        <div class="bg-white rounded-lg shadow-lg p-6 mb-6">
+            <h2 class="text-xl font-semibold mb-4">Assessment Results</h2>
+            <div id="overallScore" class="text-2xl font-bold text-center mb-4">Overall Score: 0.0/5.0</div>
+            <div id="familyScores"></div>
+        </div>
+
+        <div class="bg-white rounded-lg shadow-lg p-6">
+            <h2 class="text-xl font-semibold mb-4">Control Assessments</h2>
+            <div id="controlList"></div>
+        </div>
+    </div>
+
+    <script src="calculator.js"></script>
+</body>
+</html>
