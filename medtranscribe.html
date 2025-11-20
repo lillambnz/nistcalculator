@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MedTranscribe AI - Australian Healthcare Compliant</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="app-container">
+        <!-- Header -->
+        <header class="header">
+            <div class="header-content">
+                <div class="logo-section">
+                    <svg class="logo-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"/>
+                    </svg>
+                    <h1>MedTranscribe AI</h1>
+                </div>
+                <div class="compliance-badge">
+                    <svg viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/>
+                    </svg>
+                    <span>Australian Privacy Compliant</span>
+                </div>
+            </div>
+        </header>
+
+        <!-- Main Content -->
+        <div class="main-content">
+            <!-- Left Panel - Patient Information & Controls -->
+            <aside class="left-panel">
+                <div class="panel-card">
+                    <h2 class="panel-title">Patient Information</h2>
+                    <div class="privacy-notice">
+                        <svg viewBox="0 0 24 24" fill="currentColor">
+                            <path d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                        </svg>
+                        <span>Information protected under Australian Privacy Principles (APPs)</span>
+                    </div>
+
+                    <form id="patientForm" class="patient-form">
+                        <div class="form-group">
+                            <label for="patientId">Patient ID / Medicare Number</label>
+                            <input type="text" id="patientId" placeholder="e.g., 2428 32145 1" autocomplete="off">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="patientName">Patient Name</label>
+                            <input type="text" id="patientName" placeholder="Full Name" autocomplete="off">
+                        </div>
+
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="patientDOB">Date of Birth</label>
+                                <input type="date" id="patientDOB">
+                            </div>
+                            <div class="form-group">
+                                <label for="patientGender">Gender</label>
+                                <select id="patientGender">
+                                    <option value="">Select</option>
+                                    <option value="male">Male</option>
+                                    <option value="female">Female</option>
+                                    <option value="other">Other</option>
+                                    <option value="not-disclosed">Prefer not to say</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="clinicianName">Clinician Name</label>
+                            <input type="text" id="clinicianName" placeholder="Dr. Name" autocomplete="off">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="appointmentType">Appointment Type</label>
+                            <select id="appointmentType">
+                                <option value="consultation">General Consultation</option>
+                                <option value="followup">Follow-up</option>
+                                <option value="procedure">Procedure</option>
+                                <option value="emergency">Emergency</option>
+                                <option value="telehealth">Telehealth</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="appointmentDate">Appointment Date</label>
+                            <input type="datetime-local" id="appointmentDate">
+                        </div>
+
+                        <div class="consent-section">
+                            <label class="checkbox-label">
+                                <input type="checkbox" id="consentCheck" required>
+                                <span>Patient has provided informed consent for recording and transcription as per APP 3 (Collection of solicited personal information)</span>
+                            </label>
+                        </div>
+                    </form>
+                </div>
+
+                <div class="panel-card">
+                    <h2 class="panel-title">Recording Controls</h2>
+
+                    <div class="recording-controls">
+                        <button id="startRecording" class="btn btn-primary btn-large">
+                            <svg viewBox="0 0 24 24" fill="currentColor">
+                                <circle cx="12" cy="12" r="10"/>
+                            </svg>
+                            Start Recording
+                        </button>
+
+                        <button id="stopRecording" class="btn btn-danger btn-large" disabled>
+                            <svg viewBox="0 0 24 24" fill="currentColor">
+                                <rect x="6" y="6" width="12" height="12"/>
+                            </svg>
+                            Stop Recording
+                        </button>
+
+                        <button id="pauseRecording" class="btn btn-secondary" disabled>
+                            <svg viewBox="0 0 24 24" fill="currentColor">
+                                <path d="M10 9v6m4-6v6m7-3a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                            </svg>
+                            Pause
+                        </button>
+                    </div>
+
+                    <div class="recording-status">
+                        <div class="status-indicator" id="recordingStatus">
+                            <span class="status-dot"></span>
+                            <span class="status-text">Ready</span>
+                        </div>
+                        <div class="recording-timer" id="recordingTimer">00:00</div>
+                    </div>
+
+                    <div class="audio-visualizer" id="audioVisualizer">
+                        <canvas id="visualizerCanvas"></canvas>
+                    </div>
+                </div>
+
+                <div class="panel-card">
+                    <h2 class="panel-title">Medical Templates</h2>
+                    <div class="template-buttons">
+                        <button class="btn btn-outline btn-small" onclick="insertTemplate('soap')">SOAP Note</button>
+                        <button class="btn btn-outline btn-small" onclick="insertTemplate('history')">History & Physical</button>
+                        <button class="btn btn-outline btn-small" onclick="insertTemplate('progress')">Progress Note</button>
+                        <button class="btn btn-outline btn-small" onclick="insertTemplate('discharge')">Discharge Summary</button>
+                        <button class="btn btn-outline btn-small" onclick="insertTemplate('prescription')">Prescription</button>
+                        <button class="btn btn-outline btn-small" onclick="insertTemplate('referral')">Referral Letter</button>
+                    </div>
+                </div>
+            </aside>
+
+            <!-- Center Panel - Transcription -->
+            <main class="center-panel">
+                <div class="transcription-card">
+                    <div class="transcription-header">
+                        <h2>Clinical Documentation</h2>
+                        <div class="transcription-actions">
+                            <button class="btn btn-icon" onclick="clearTranscription()" title="Clear">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <path d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/>
+                                </svg>
+                            </button>
+                            <button class="btn btn-icon" onclick="toggleAutoScroll()" title="Auto-scroll">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <path d="M19 14l-7 7m0 0l-7-7m7 7V3"/>
+                                </svg>
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="transcription-content" id="transcriptionContent" contenteditable="true" spellcheck="true">
+                        <p class="placeholder">Medical transcription will appear here as you speak...</p>
+                    </div>
+
+                    <div class="transcription-stats">
+                        <div class="stat-item">
+                            <span class="stat-label">Words:</span>
+                            <span class="stat-value" id="wordCount">0</span>
+                        </div>
+                        <div class="stat-item">
+                            <span class="stat-label">Characters:</span>
+                            <span class="stat-value" id="charCount">0</span>
+                        </div>
+                        <div class="stat-item">
+                            <span class="stat-label">Confidence:</span>
+                            <span class="stat-value" id="confidenceScore">-</span>
+                        </div>
+                        <div class="stat-item">
+                            <span class="stat-label">AI Status:</span>
+                            <span class="stat-value" id="aiStatus">Ready</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="action-bar">
+                    <button class="btn btn-success" onclick="saveTranscription()">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M8 7H5a2 2 0 00-2 2v9a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2h-3m-1 4l-3 3m0 0l-3-3m3 3V4"/>
+                        </svg>
+                        Save Securely
+                    </button>
+                    <button class="btn btn-secondary" onclick="exportPDF()">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M7 21h10a2 2 0 002-2V9.414a1 1 0 00-.293-.707l-5.414-5.414A1 1 0 0012.586 3H7a2 2 0 00-2 2v14a2 2 0 002 2z"/>
+                        </svg>
+                        Export PDF
+                    </button>
+                    <button class="btn btn-secondary" onclick="exportDOCX()">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
+                        </svg>
+                        Export DOCX
+                    </button>
+                    <button class="btn btn-outline" onclick="printTranscription()">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M17 17h2a2 2 0 002-2v-4a2 2 0 00-2-2H5a2 2 0 00-2 2v4a2 2 0 002 2h2m2 4h6a2 2 0 002-2v-4a2 2 0 00-2-2H9a2 2 0 00-2 2v4a2 2 0 002 2zm8-12V5a2 2 0 00-2-2H9a2 2 0 00-2 2v4h10z"/>
+                        </svg>
+                        Print
+                    </button>
+                </div>
+            </main>
+
+            <!-- Right Panel - AI Suggestions & Medical Terms -->
+            <aside class="right-panel">
+                <div class="panel-card">
+                    <h2 class="panel-title">AI Suggestions</h2>
+                    <div id="aiSuggestions" class="suggestions-list">
+                        <div class="suggestion-item">
+                            <div class="suggestion-icon">💡</div>
+                            <div class="suggestion-text">AI medical suggestions will appear here during transcription</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="panel-card">
+                    <h2 class="panel-title">Medical Dictionary</h2>
+                    <input type="text" id="medicalSearch" placeholder="Search medical terms..." class="search-input">
+                    <div id="medicalTerms" class="medical-terms-list">
+                        <div class="term-item">
+                            <strong>Hypertension</strong>
+                            <p>High blood pressure</p>
+                        </div>
+                        <div class="term-item">
+                            <strong>Dyspnoea</strong>
+                            <p>Difficulty breathing</p>
+                        </div>
+                        <div class="term-item">
+                            <strong>Myocardial Infarction</strong>
+                            <p>Heart attack</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="panel-card">
+                    <h2 class="panel-title">Recent Transcriptions</h2>
+                    <div id="recentFiles" class="recent-files-list">
+                        <p class="empty-state">No recent transcriptions</p>
+                    </div>
+                </div>
+
+                <div class="panel-card privacy-card">
+                    <h2 class="panel-title">Privacy & Security</h2>
+                    <div class="privacy-features">
+                        <div class="feature-item">
+                            <svg viewBox="0 0 24 24" fill="currentColor">
+                                <path d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"/>
+                            </svg>
+                            <span>AES-256 Encryption</span>
+                        </div>
+                        <div class="feature-item">
+                            <svg viewBox="0 0 24 24" fill="currentColor">
+                                <path d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/>
+                            </svg>
+                            <span>APP Compliant</span>
+                        </div>
+                        <div class="feature-item">
+                            <svg viewBox="0 0 24 24" fill="currentColor">
+                                <path d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                            </svg>
+                            <span>Audit Logs</span>
+                        </div>
+                        <div class="feature-item">
+                            <svg viewBox="0 0 24 24" fill="currentColor">
+                                <path d="M3 6l3 1m0 0l-3 9a5.002 5.002 0 006.001 0M6 7l3 9M6 7l6-2m6 2l3-1m-3 1l-3 9a5.002 5.002 0 006.001 0M18 7l3 9m-3-9l-6-2m0-2v2m0 16V5m0 16H9m3 0h3"/>
+                            </svg>
+                            <span>Local Storage</span>
+                        </div>
+                    </div>
+                </div>
+            </aside>
+        </div>
+    </div>
+
+    <!-- Modals -->
+    <div id="loadingModal" class="modal">
+        <div class="modal-content">
+            <div class="loader"></div>
+            <p>Processing transcription...</p>
+        </div>
+    </div>
+
+    <div id="errorModal" class="modal">
+        <div class="modal-content error">
+            <svg viewBox="0 0 24 24" fill="currentColor">
+                <path d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
+            </svg>
+            <h3>Error</h3>
+            <p id="errorMessage"></p>
+            <button class="btn btn-primary" onclick="closeModal('errorModal')">Close</button>
+        </div>
+    </div>
+
+    <script src="medtranscribe.js"></script>
+</body>
+</html>
